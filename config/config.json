@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "Lap1sLazul1!",
-    "database": "exampledb",
+    "database": "bookMatch",
     "host": "localhost",
     "dialect": "mysql"
   },
