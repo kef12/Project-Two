@@ -1,8 +1,9 @@
 {
   "development": {
     "username": "root",
-    "password": "Znf,ni7s",
-    "database": "dbExamples",
+    "password": "",
+    "database": "bookMatch",
+
     "host": "localhost",
     "dialect": "mysql"
   },
@@ -19,3 +20,4 @@
     "dialect": "mysql"
   }
 }
+ 
