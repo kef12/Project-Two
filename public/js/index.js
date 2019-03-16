@@ -5,6 +5,8 @@ var $submitBtn = $("#submit");
 var $exampleList = $("#example-list");
 
 // The API object contains methods for each kind of request we'll make
+
+//this will become our favBook functions 
 var API = {
   saveExample: function(example) {
     return $.ajax({
@@ -29,6 +31,7 @@ var API = {
     });
   }
 };
+
 
 // refreshExamples gets new examples from the db and repopulates the list
 var refreshExamples = function() {
