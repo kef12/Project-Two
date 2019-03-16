@@ -3,11 +3,11 @@ var axios = require("axios");
 
 module.exports = function(app) {
   // Get all examples
-  app.get("/api/examples", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.json(dbExamples);
-    });
-  });
+  // app.get("/api/examples", function(req, res) {
+  //   db.Example.findAll({}).then(function(dbExamples) {
+  //     res.json(dbExamples);
+  //   });
+  // });
 
   //---------------------------------TasteDive-----------------------------//
   //TasteDive API variables
