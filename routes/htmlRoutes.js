@@ -12,10 +12,45 @@ module.exports = function(app) {
     });
   });
 
+  //-----------------------TasteDive Routes-------------------------
+  app.get("/search", function(req, res) {
+    console.log("book search query URL: ", queryUrl);
+    axios
+      .get(queryUrl, {
+        method: "get",
+        responseType: "json"
+      })
+      .then(function(response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+  });
+
+  //-----------------------GoodReads Routes-------------------------
+  app.get("/details", function(req, res) {
+    console.log("details (GR) query URL: ", grQueryUrl);
+    axios
+      .get(grQueryUrl, {
+        method: "get",
+        responseType: "json"
+      })
+      //handle success
+      .then(function(response) {
+        console.log(response);
+      })
+      //handle error
+      .catch(function(err) {
+        console.log(err);
+      });
+  });
 
   // Load example page and pass in an example by id
   app.get("/example/:id", function(req, res) {
-    db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
+    db.Example.findOne({ where: { id: req.params.id } }).then(function(
+      dbExample
+    ) {
       res.render("example", {
         example: dbExample
       });
