@@ -2,7 +2,7 @@
     //this API will provide covers, details, etc. for carousel
 
 // var tdTitles
-var gbApiKey = "AIzaSyCANn3sUOF-s7QkXpQB9nW-6L-If85E2l0";
+var gbApiKey = process.env.GB_API_KEY;
 
 //build query url
 var gbQueryUrl = 

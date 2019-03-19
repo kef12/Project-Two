@@ -1,5 +1,5 @@
 //Variables and Routes for TasteDive API
-var tdApiKey = "332360-bookMatc-UAQONPTP";
+var tdApiKey = process.env.TD_API_KEY;
 
 // //build queryUrl
 var tdQueryUrl =
