@@ -52,7 +52,8 @@ module.exports = function (app) {
                 gbId: response.data.items[0].id,
                 gbLink: response.data.items[0].selfLink,
                 gbInfo: response.data.items[0].volumeInfo,
-                gbISBN: response.data.items[0].volumeInfo.industryIdentifiers[1].identifier
+                gbISBN: response.data.items[0].volumeInfo.industryIdentifiers[1].identifier,
+                gbDetails: response.data.items[0].volumeInfo.description
               }
               // console.log("GB Response Data: " + gbResponse.gbInfo.title);
               responseArray.push(gbResponse);

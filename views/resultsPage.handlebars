@@ -1,19 +1,25 @@
 <h3>Recommendations for You!</h3>
 
-
-<!--Img Carousel-->
-{{!-- <div class="carousel">
-    {{#each booksArray}}
-    <a class="carousel-item"><img src="{{this.gbInfo.imageLinks.thumbnail}}"></a>
-    {{/each}}
-    <!-- <div class="carousel-item red white-text" id="book-info" href="#one!">
-        <h2>{{this.gbInfo.title}}</h2>
-         <h3>{{this.gbInfo.authors}}</h3> 
-     </div>  -->
-</div> --}}
+<!--Full-Width Carousel w/ Embedded Viewer-->
+<div class="resp-container">
+    <div class="container">
+        <div class="carousel carousel-slider center">
+            {{#each booksArray}}
+            <div class="carousel-item red">
+                <div id="viewerCanvas-{{this.gbISBN}}" data-id="{{this.gbISBN}}" style="width: 50%; height: 100%"></div>
+            </div>
+            {{/each}}
+            {{#each booksArray}}
+            <div class="carousel-item">
+                <p>{{this.gbDetails}}</p>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
 
 <!--List-->
-<div class="container">
+<!--<div class="container">
     <div class="card">
         <ul id="results-list" class="list-group">
             {{#each booksArray}}
@@ -24,7 +30,7 @@
             {{/each}}
         </ul>
     </div>
-</div>
+</div>-->
 
 <!--Full-Width Carousel w/ Descriptions-->
 {{!-- <div class="container">
@@ -45,23 +51,6 @@
         {{/each}}
     </div>
 </div> --}}
-
-<!--Full-Width Carousel w/ Embedded Viewer-->
-<div class="container">
-    <div class="carousel carousel-slider center">
-        {{#each booksArray}}
-        <div class="carousel-fixed-item center">
-            <!--More Info buttons here??-->
-            <a class="btn waves-effect white grey-text darken-text-2">Details</a>
-        </div>
-        {{/each}}
-        {{#each booksArray}}
-        <div class="carousel-item red white-text">
-            <div id="viewerCanvas-{{this.gbISBN}}" data-id="{{this.gbISBN}}" style="width: 40%; height: 100%"></div>
-        </div>
-        {{/each}}
-    </div>
-</div>
 
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -87,9 +76,9 @@
 
     //initialize Google View for each book
     function initializeViewers() {
-   
+
         //loop through each viewer canvas - anything w/ an id starting with "viewerCanvas"
-        $("[id^=viewerCanvas]").each(function() {
+        $("[id^=viewerCanvas]").each(function () {
             //Create a new viewer for each of them
             let isbn = $(this).data("id");
             console.log(isbn);
@@ -97,7 +86,7 @@
             //console.log("this: ", $(this));
             //console.log($(this).attr("id"));
             //console.log(this.id);
-            
+
             //!-- let viewerCanvasDomElemId = "viewerCanvas-" + isbn;
             let googleViewer = new google.books.DefaultViewer(this);
 
@@ -106,9 +95,9 @@
         })
     }
     //function initialize() {
-        //var viewer = new google.books.defaultViewer(document.getElementById("viewerCanvas"));
-        //viewer.load("ISBN:viewerCanvas", null, alertInitialized);
-        //viewer.load("ISBN:1234", alertNotFound);
+    //var viewer = new google.books.defaultViewer(document.getElementById("viewerCanvas"));
+    //viewer.load("ISBN:viewerCanvas", null, alertInitialized);
+    //viewer.load("ISBN:1234", alertNotFound);
     //}
 
     function alertInitialized() {
