@@ -1,17 +1,21 @@
 //Variables and Routes for TasteDive API
 var tdApiKey = "332360-bookMatc-UAQONPTP";
 
-//build queryUrl
+// //build queryUrl
 var tdQueryUrl =
+    //base url with spot to plug in search term from search box
     "https://tastedive.com/api/similar?q=[[SEARCH_TERM]]" +
-    "&type=books&limit=10&k=" +
+    //limit type to books and only 10
+    "&type=books&limit=10" +
+    //plugs in api key
+    "&k=" +
     tdApiKey +
-    "&verbose=1&callback?=responseReceived";
+    //callback parameter
+    "&callback?=responseReceived";
+    //can add in verbose=1& before callback to get more information
 
 //export the queryUrl
 module.exports = tdQueryUrl;
-
-
 
 
 

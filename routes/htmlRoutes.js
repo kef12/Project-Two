@@ -1,6 +1,10 @@
 var db = require("../models");
 var tdQueryUrl = require("../controllers/tastedive");
+var gbQueryUrl = require("../controllers/googleBooks")
 var axios = require("axios");
+var gbResponse;
+var responseArray = [];
+var responseCounter = 0;
 
 // var path = require("path");
 
@@ -19,34 +23,66 @@ module.exports = function (app) {
 
   //Route to hit after submit button - this is where the TD data will publish in a carousel
   app.get("/resultsPage", function (req, res) {
-
-    //this code will get moved eventually
     //get search term
-    // let bookSearchTermFromBody = req.body.text;
-    let bookSearchTermFromQueryParam = req.query.bookTerm;
-    console.log("Incoming Search Term Request: " + bookSearchTermFromQueryParam);
-    console.log("--------")
+    let bookSearchTerm = req.query.bookTerm;
 
     //inject search term into tdQueryUrl
-    let tdApiQueryUrl = tdQueryUrl.replace("[[SEARCH_TERM]]",bookSearchTermFromQueryParam)
-    console.log("TD API Request: " + tdApiQueryUrl);
+    let tdApiQueryUrl = tdQueryUrl.replace("[[SEARCH_TERM]]", bookSearchTerm)
 
-    //axios call (will get moved too)
+    //TD axios call (will get moved too)
     axios
       .get(tdApiQueryUrl, {
         method: "GET",
         responseType: "json"
       })
-      .then(function(response) {
-        console.log("TD API Response: " + JSON.stringify(response.data));
-        res.render("resultsPage", response.data);
-      })
-      .catch(function(err) {
-        console.log(err);
-      });
 
-    //render search.handlebars page
-    // res.render("resultsPage");
+      .then(function (response) {
+        //for loop to log td response names
+        for (var i = 0; i < response.data.Similar.Results.length; i++) {
+          let tdResponseNames = response.data.Similar.Results[i].Name;
+
+          //inject search names into gbQueryUrl
+          let gbApiQueryUrl = gbQueryUrl.replace("[[SEARCH_TERM]]", tdResponseNames)
+          // console.log("GB API Request: " + gbApiQueryUrl)
+
+          //axios call to google books api
+          axios
+            .get(gbApiQueryUrl, {
+              method: "GET",
+              responseType: "json"
+            })
+
+            .then(function (response) {
+              var gbResponse = {
+                gbId: response.data.items[0].id,
+                gbLink: response.data.items[0].selfLink,
+                gbInfo: response.data.items[0].volumeInfo,
+              }
+              // console.log("GB Response Data: " + gbResponse.gbInfo.title);
+              responseArray.push(gbResponse);
+              responseCounter++;
+
+              //if we have all 5 results ready in the array/to manage asynchronicity
+              if (responseCounter === 4) {
+                //give resultsPage.handlebars the response.data
+               var gbResponseData = {booksArray: responseArray}
+               console.log(JSON.stringify(gbResponseData));
+               res.render("resultsPage", gbResponseData);
+
+             };
+            })
+            //catch any gb response errors
+            .catch(function (err) {
+              console.log(err);
+            });
+           
+        };
+      })
+      //catch any td response errors
+      .catch(function (err) {
+        console.log(err)
+      })
+
   });
 
   //Details route

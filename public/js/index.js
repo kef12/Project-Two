@@ -40,6 +40,18 @@ $searchText.keypress(function (e) {
 });
 
 
+//initialize carousel -- uncomment when ready for carousel
+$(document).ready(function(){
+  $(".carousel.carousel-slider").carousel({
+    fullWidth: true,
+    indicators: true
+  });
+});
+    
+
+console.log("initializing carousel");
+
+
 
 
 
@@ -158,17 +170,6 @@ $searchText.keypress(function (e) {
 // };
 
 
-
-//initialize carousel -- uncomment when ready for carousel
-// $(document).ready(function(){
-//   $(".carousel.carousel-slider").carousel({
-//     fullWidth: true,
-//     indicators: true
-//   });
-// });
-    
-
-// console.log("initializing carousel");
 
 
 // handleDeleteBtnClick is called when an example's delete button is clicked

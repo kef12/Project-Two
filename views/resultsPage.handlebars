@@ -1,11 +1,11 @@
 <h3>Recommendations:</h3>
-
+<h2>testing</h2>
 <div class="container">
     <div class="card">
         <ul id="results-list" class="list-group">
-            {{#each Similar.Results}}
-            <li data-id="{{this.Name}}" class="list-group-item">
-                <span>{{this.Name}}</span> 
+            {{#each booksArray}}
+            <li data-id="{{this.gbId}}" class="list-group-item">
+                <span>{{this.gbInfo.title}}</span>
                 <button class="btn">Heart!</button>
             </li>
             {{/each}}
@@ -14,10 +14,34 @@
 </div>
 
 
+{{#each booksArray}}
+<div class="carousel carousel-slider center">
+    <div class="carousel-fixed-item-center" id="carousel-img">
+        <img src="{{this.gbInfo.imageLinks.thumbnail}}" class="z-depth-3">
+    </div>
+    <div class="carousel-item red white-text" id="book-info" href="#one!">
+        <h2>{{this.gbInfo.title}}</h2>
+        {{!-- <h3>{{this.gbInfo.authors[0]}}</h3> --}}
+    </div>
+</div>
+{{/each}}
 
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/js/index.js"></script>
+
+<script>
+    //initialize carousel -- uncomment when ready for carousel
+    $(document).ready(function () {
+        $(".carousel.carousel-slider").carousel({
+            fullWidth: true,
+            indicators: true
+        });
+    });
+
+
+    console.log("initializing carousel");
+</script>
 
 
 
