@@ -14,29 +14,31 @@
 </div>
 
 
-{{#each booksArray}}
-<div class="carousel carousel-slider center">
-    <div class="carousel-fixed-item-center" id="carousel-img">
-        <img src="{{this.gbInfo.imageLinks.thumbnail}}" class="z-depth-3">
-    </div>
-    <div class="carousel-item red white-text" id="book-info" href="#one!">
+
+<div class="carousel">
+    {{#each booksArray}}
+    <a class="carousel-item"><img src="{{this.gbInfo.imageLinks.thumbnail}}"></a>
+    {{/each}}
+    <!-- <div class="carousel-item red white-text" id="book-info" href="#one!">
         <h2>{{this.gbInfo.title}}</h2>
-        {{!-- <h3>{{this.gbInfo.authors[0]}}</h3> --}}
-    </div>
+         <h3>{{this.gbInfo.authors}}</h3> 
+     </div>  -->
 </div>
-{{/each}}
 
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script src="/js/index.js"></script>
 
 <script>
     //initialize carousel -- uncomment when ready for carousel
     $(document).ready(function () {
-        $(".carousel.carousel-slider").carousel({
-            fullWidth: true,
-            indicators: true
-        });
+        $(".carousel").carousel();
+
+        //$(".carousel.carousel-slider").carousel({
+           // fullWidth: true,
+          //  indicators: true
+        //}); 
     });
 
 
