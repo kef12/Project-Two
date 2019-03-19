@@ -1,10 +1,85 @@
+//require TasteDive API call function
+// var tdSearcher;
+
 // Get references to page elements
 var $searchText = $("#search-text");
 var $submitBtn = $("#submit");
-// var $bookList = $("#book-list");
+
+//handle form submit whenever we submit a new search
+var handleFormSubmit = function(event) {
+  event.preventDefault();
+
+  //onsubmit click, function to format search terms
+  var searchEntry = {
+    text: $searchText.val().trim().split(" ").join("+")
+  };
+
+  if (!searchEntry.text) {
+    alert("You must enter either a book or an author");
+    return;
+  }
+  
+  console.log(searchEntry);
+
+  //Go to the Search html route/controller GET action
+  location.replace("resultsPage?bookTerm=" + searchEntry.text);
+
+};
+
+//Add event listeners to the book search submit
+$submitBtn.on("click", handleFormSubmit);
+
+//Ensure enter key submits the search
+$searchText.keypress(function (e) {
+  let key = e.which;
+  if(key === 13) //the enter key code
+  {
+    handleFormSubmit(e);
+    return false;
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//this is only to get functionality going, will re-work later
+// module.exports = $searchText;
 
 // The API object contains methods for each kind of request we'll make
-
 //this will become our favBook functions
 // var API = {
 //   saveExample: function(example) {
@@ -33,6 +108,7 @@ var $submitBtn = $("#submit");
 
 // refreshExamples gets new examples from the db and repopulates the list
 //This will become our carousel logic..maybe?
+
 // var refreshExamples = function() {
 //   API.getExamples().then(function(data) {
 //     var $examples = data.map(function(example) {
@@ -62,27 +138,38 @@ var $submitBtn = $("#submit");
 // };
 
 // handleFormSubmit is called whenever we submit a new search
-// Save the new example to the db and refresh the list -- don't need this, not going
-//to save searches, only going to save favorites ??
-var handleFormSubmit = function(event) {
-  event.preventDefault;
+// var handleFormSubmit = function(event) {
+//   event.preventDefault();
 
-  //onsubmit click, function to format search terms
-  var searchEntry = {
-    text: $searchText.val().trim()
-  };
+//   //onsubmit click, format search terms
+//   var searchEntry = {
+//     text: $searchText.val().trim().split(" ").join("+")
+//   };
+//   console.log(searchEntry);
 
-  if (!search.text) {
-    alert("You must enter either a book or an author!");
-    return;
-  }
+//   tdSearcher;
 
-  // API.saveExample(example).then(function() {
-  //   refreshExamples();
-  // });
+//   if (!searchEntry.text) {
+//     alert("You must enter either a book or an author!");
+//     return;
+//   }
+//   $searchText.val("");
 
-  $searchText.val("");
-};
+// };
+
+
+
+//initialize carousel -- uncomment when ready for carousel
+// $(document).ready(function(){
+//   $(".carousel.carousel-slider").carousel({
+//     fullWidth: true,
+//     indicators: true
+//   });
+// });
+    
+
+// console.log("initializing carousel");
+
 
 // handleDeleteBtnClick is called when an example's delete button is clicked
 // Remove the example from the db and refresh the list
@@ -97,6 +184,7 @@ var handleFormSubmit = function(event) {
 // };
 
 // Add event listeners to the submit and delete buttons
-$submitBtn.on("click", handleFormSubmit);
+// $submitBtn.on("click", handleFormSubmit);
 
 // $exampleList.on("click", ".delete", handleDeleteBtnClick);
+

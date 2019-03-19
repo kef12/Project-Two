@@ -1,68 +1,76 @@
 var db = require("../models");
+var tdQueryUrl = require("../controllers/tastedive");
+var axios = require("axios");
 
-module.exports = function(app) {
-  // Load index page
+// var path = require("path");
 
-  app.get("/", function(req, res) {
-    db.Author.findAll({}).then(function(dbExamples) {
-      res.render("index", {
-        msg: "Welcome!",
-        examples: dbExamples
-      });
-    });
+// var queryUrl = require("../routes/tastedive");
+// var axios = require("axios");
+
+//Routes
+// =============================================================
+module.exports = function (app) {
+
+  //Index Route loads main page
+  app.get("/", function (req, res) {
+    res.render("index");
   });
 
-  //-----------------------TasteDive Routes-------------------------
-  app.get("/search", function(req, res) {
-    console.log("book search query URL: ", queryUrl);
+
+  //Route to hit after submit button - this is where the TD data will publish in a carousel
+  app.get("/resultsPage", function (req, res) {
+
+    //this code will get moved eventually
+    //get search term
+    // let bookSearchTermFromBody = req.body.text;
+    let bookSearchTermFromQueryParam = req.query.bookTerm;
+    console.log("Incoming Search Term Request: " + bookSearchTermFromQueryParam);
+    console.log("--------")
+
+    //inject search term into tdQueryUrl
+    let tdApiQueryUrl = tdQueryUrl.replace("[[SEARCH_TERM]]",bookSearchTermFromQueryParam)
+    console.log("TD API Request: " + tdApiQueryUrl);
+
+    //axios call (will get moved too)
     axios
-      .get(queryUrl, {
-        method: "get",
+      .get(tdApiQueryUrl, {
+        method: "GET",
         responseType: "json"
       })
       .then(function(response) {
-        console.log(JSON.stringify(response.data));
+        console.log("TD API Response: " + JSON.stringify(response.data));
+        res.render("resultsPage", response.data);
       })
       .catch(function(err) {
         console.log(err);
       });
+
+    //render search.handlebars page
+    // res.render("resultsPage");
   });
 
-  //-----------------------GoodReads Routes-------------------------
-  app.get("/details", function(req, res) {
-    console.log("details (GR) query URL: ", grQueryUrl);
-    axios
-      .get(grQueryUrl, {
-        method: "get",
-        responseType: "json"
-      })
-      //handle success
-      .then(function(response) {
-        console.log(response);
-      })
-      //handle error
-      .catch(function(err) {
-        console.log(err);
-      });
+  //Details route
+  app.get("/detailsPage", function (req, res) {
+    res.render("detailsPage");
+    //goodreads call - need to move this
+    // axios
+    //   .get(grQueryUrl, {
+    //     method: "get",
+    //     responseType: "json"
+    //   })
+    //   //handle success
+    //   .then(function(response) {
+    //     console.log(response);
+    //   })
+    //   //handle error
+    //   .catch(function(err) {
+    //     console.log(err);
+    //   });
   });
 
-  // Load example page and pass in an example by id
-  app.get("/example/:id", function(req, res) {
-    db.Example.findOne({ where: { id: req.params.id } }).then(function(
-      dbExample
-    ) {
-      res.render("example", {
-        example: dbExample
-      });
-    });
-  });
-
-  app.get("*", function(req, res) {
-    res.render("");
-  });
 
   // Render 404 page for any unmatched routes
-  app.get("*", function(req, res) {
+  app.get("*", function (req, res) {
     res.render("404");
   });
 };

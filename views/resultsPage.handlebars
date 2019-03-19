@@ -1,0 +1,61 @@
+<h3>Recommendations:</h3>
+
+<div class="container">
+    <div class="card">
+        <ul id="results-list" class="list-group">
+            {{#each Similar.Results}}
+            <li data-id="{{this.Name}}" class="list-group-item">
+                <span>{{this.Name}}</span> 
+                <span>{{this.</span>
+                <button class="btn">Heart!</button>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+
+
+
+<!-- Code for Carousel, getting a simple list to populate first though -->
+{{!-- <div class="carousel carousel-slider center">
+    <div class="carousel-fixed-item center">
+        <a class="btn waves-effect white grey-text darken-text-2">button</a>
+    </div>
+    <div class="carousel-item red white-text" href="#one!">
+        <h2>First Panel</h2>
+        <p class="white-text">This is your first panel</p>
+    </div>
+    <div class="carousel-item amber white-text" href="#two!">
+        <h2>Second Panel</h2>
+        <p class="white-text">This is your second panel</p>
+    </div>
+    <div class="carousel-item green white-text" href="#three!">
+        <h2>Third Panel</h2>
+        <p class="white-text">This is your third panel</p>
+    </div>
+    <div class="carousel-item blue white-text" href="#four!">
+        <h2>Fourth Panel</h2>
+        <p class="white-text">This is your fourth panel</p>
+    </div>
+</div> --}}
+
+
+
+
+
+{{!-- <h3>Examples:</h3>
+
+        <ul id="example-list" class="list-group">
+          {{#each examples}}
+          <li data-id="{{this.id}}" class="list-group-item">
+            <a href="example/{{this.id}}">{{this.text}}</a>
+            <button class="btn btn-danger float-right delete">ｘ</button>
+          </li>
+          {{/each}}
+        </ul> --}}

@@ -7,35 +7,16 @@
           Enter your favorite book or author below to search.
         </p>
 
-        <form class="clearfix mb-4" action="POST">
-
+        <form class="clearfix mb-4"> <!--action="resultsPage"-->
           <div class="form-group">
-            {{!-- <label for="example-text">Your Favorite Book</label> --}}
             <input type="text" id="search-text" class="form-control" aria-describedby="search-form"
               placeholder="Search by Book or Author">
           </div>
-
-          {{!-- <div class="form-group">
-            <label for="example-description">Example Description</label>
-            <textarea class="form-control" id="example-description" aria-describedby="example-description"
-              placeholder="Enter Example Description"></textarea>
-          </div> --}}
-
-          <button id="submit" class="btn btn-primary float-right">Submit</button>
-
+           <button class="btn waves-effect waves-light" type="submit" id="submit" name="action">Submit</button>
         </form>
+        
 
-        <h3>Examples:</h3>
-
-        <ul id="example-list" class="list-group">
-          {{#each examples}}
-          <li data-id="{{this.id}}" class="list-group-item">
-            <a href="example/{{this.id}}">{{this.text}}</a>
-            <button class="btn btn-danger float-right delete">ｘ</button>
-          </li>
-          {{/each}}
-        </ul>
-
+    
       </div>
     </div>
   </div>
