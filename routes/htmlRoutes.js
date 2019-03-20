@@ -7,11 +7,6 @@ var responseArray = [];
 var responseCounter = 0;
 var path = require("path");
 
-// var path = require("path");
-
-// var queryUrl = require("../routes/tastedive");
-// var axios = require("axios");
-
 //Routes
 // =============================================================
 module.exports = function (app) {
@@ -59,16 +54,17 @@ module.exports = function (app) {
                 gbId: response.data.items[0].id,
                 gbLink: response.data.items[0].selfLink,
                 gbInfo: response.data.items[0].volumeInfo,
+                gbISBN: response.data.items[0].volumeInfo.industryIdentifiers[1].identifier
               }
               // console.log("GB Response Data: " + gbResponse.gbInfo.title);
               responseArray.push(gbResponse);
               responseCounter++;
 
               //if we have all 5 results ready in the array/to manage asynchronicity
-              if (responseCounter === 4) {
+              if (responseCounter >= 10) {
                 //give resultsPage.handlebars the response.data
                var gbResponseData = {booksArray: responseArray}
-               console.log(JSON.stringify(gbResponseData));
+              //  console.log(JSON.stringify(gbResponseData));
                res.render("resultsPage", gbResponseData);
 
              };
@@ -86,6 +82,10 @@ module.exports = function (app) {
       })
 
   });
+
+  app.get("/fullWidthCarousel", function(req, res) {
+    res.render("fullWidthCarousel");
+  })
 
   //Details route
   app.get("/detailsPage", function (req, res) {
