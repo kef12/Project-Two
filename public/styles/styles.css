@@ -1,3 +1,48 @@
 .list-group-item {
   line-height: 2.5;
 }
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 20px;
+  background-image: url("../img/books-1245690_1920.jpg");
+}
+
+.nav,
+.nav-wrapper {
+  background-color: #fff8e1;
+  background: rgb(230,218,206); /* for browsers without RGBA support */
+  background: rgba(230,218,206,0.95); 
+  padding: 6rem;
+}
+
+.brand-logo {
+  margin-top: 0px;
+
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Merriweather', serif;
+}
+
+/* Search Page */
+#intro {
+  padding: 20px;
+  margin-top: 10rem;
+}
+
+/* Results Page */
+/* .container {
+  height: 800px;
+} */
+
+/* .carousel {
+  height: 75%;
+} */
+
+.resp-container {
+  position: relative;
+  overflow: scroll;
+}

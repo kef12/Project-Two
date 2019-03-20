@@ -1,7 +1,7 @@
 //Variables and Logic for Google Books API
     //this API will provide covers, details, etc. for carousel
 
-// var tdTitles
+
 var gbApiKey = process.env.GB_API_KEY;
 
 //build query url
