@@ -46,3 +46,17 @@ h3 {
   position: relative;
   overflow: scroll;
 }
+
+#fplogo {
+  display:block;
+margin-right:auto;
+margin-left:auto;
+}
+
+#resultstitle {
+  font-family: 'Great Vibes', cursive;
+  text-align: center;
+  font-size: 90px;
+/* background-color: white; */
+}
+
