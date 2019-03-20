@@ -82,9 +82,9 @@ module.exports = function (app) {
 
   });
 
-  app.get("/fullWidthCarousel", function(req, res) {
-    res.render("fullWidthCarousel");
-  })
+  // app.get("/fullWidthCarousel", function(req, res) {
+  //   res.render("fullWidthCarousel");
+  // })
 
   //Details route
   app.get("/detailsPage", function (req, res) {

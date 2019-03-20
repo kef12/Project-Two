@@ -30,7 +30,7 @@ h3 {
 /* Search Page */
 #intro {
   padding: 20px;
-  margin-top: 10rem;
+  margin-top: 37rem;
 }
 
 /* Results Page */
@@ -45,4 +45,44 @@ h3 {
 .resp-container {
   position: relative;
   overflow: scroll;
+}
+
+#fplogo {
+  display:block;
+margin-right:auto;
+margin-left:auto;
+}
+
+#resultstitle {
+  font-family: 'Great Vibes', cursive;
+  text-align: center;
+  font-size: 90px;
+/* background-color: white; */
+}
+
+
+.video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+.video-container > video {
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+@media screen and (max-aspect-ratio: 1920/1080) {
+  .video-container > video {
+    height: 100%;
+  }
+}
+@media screen and (min-aspect-ratio: 1920/1080) {
+  .video-container > video {
+    width: 100%;
+  }
 }
