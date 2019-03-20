@@ -5,6 +5,7 @@ var axios = require("axios");
 var gbResponse;
 var responseArray = [];
 var responseCounter = 0;
+var path = require("path");
 
 // var path = require("path");
 
@@ -25,6 +26,7 @@ module.exports = function (app) {
   app.get("/resultsPage", function (req, res) {
     //get search term
     let bookSearchTerm = req.query.bookTerm;
+      res.render("resultsPage")
 
     //inject search term into tdQueryUrl
     let tdApiQueryUrl = tdQueryUrl.replace("[[SEARCH_TERM]]", bookSearchTerm)

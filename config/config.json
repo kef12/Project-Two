@@ -1,10 +1,10 @@
 {
   "development": {
     "username": "root",
-    "password": "Lap1sLazul1!",
+    "password": "Wltyi676!",
     "database": "bookMatch",
 
-    "host": "localhost",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
