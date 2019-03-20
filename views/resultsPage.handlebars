@@ -1,6 +1,21 @@
-<h3>Recommendations:</h3>
-<h2>testing</h2>
-<div class="container">
+<h3>Recommendations for You!</h3>
+
+<!--Full-Width Carousel w/ Embedded Viewer-->
+<div class="resp-container">
+    <div class="container">
+        <div class="carousel carousel-slider center">
+            {{#each booksArray}}
+            <div class="carousel-item red">
+                <div id="viewerCanvas-{{this.gbISBN}}" data-id="{{this.gbISBN}}" style="width: 50%; height: 100%"></div>
+                
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
+
+<!--List-->
+<!--<div class="container">
     <div class="card">
         <ul id="results-list" class="list-group">
             {{#each booksArray}}
@@ -11,38 +26,85 @@
             {{/each}}
         </ul>
     </div>
-</div>
+</div>-->
 
-
-
-<div class="carousel">
-    {{#each booksArray}}
-    <a class="carousel-item"><img src="{{this.gbInfo.imageLinks.thumbnail}}"></a>
-    {{/each}}
-    <!-- <div class="carousel-item red white-text" id="book-info" href="#one!">
-        <h2>{{this.gbInfo.title}}</h2>
-         <h3>{{this.gbInfo.authors}}</h3> 
-     </div>  -->
-</div>
+<!--Full-Width Carousel w/ Descriptions-->
+{{!-- <div class="container">
+    <div class="carousel carousel-slider center">
+        {{#each booksArray}}
+        <div class="carousel-fixed-item center">
+            <!--More Info buttons here??-->
+            <a class="btn waves-effect white grey-text darken-text-2">Details</a>
+        </div>
+        {{/each}}
+        {{#each booksArray}}
+        <div class="carousel-item red white-text">
+            <img src="{{this.gbInfo.imageLinks.thumbnail}}">
+            <h2>{{this.gbInfo.title}}</h2>
+            <h3>Authors</h3>
+            <p class="white-text">Short description</p>
+        </div>
+        {{/each}}
+    </div>
+</div> --}}
 
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
 <script src="/js/index.js"></script>
 
 <script>
-    //initialize carousel -- uncomment when ready for carousel
+
+    //carousel scripts
     $(document).ready(function () {
         $(".carousel").carousel();
 
-        //$(".carousel.carousel-slider").carousel({
-           // fullWidth: true,
-          //  indicators: true
-        //}); 
+        $(".carousel.carousel-slider").carousel({
+            fullWidth: true,
+            indicators: true
+        });
     });
 
+    //embedded viewer scripts
+    google.books.load();
+    google.books.setOnLoadCallback(initializeViewers);
 
-    console.log("initializing carousel");
+    //initialize Google View for each book
+    function initializeViewers() {
+
+        //loop through each viewer canvas - anything w/ an id starting with "viewerCanvas"
+        $("[id^=viewerCanvas]").each(function () {
+            //Create a new viewer for each of them
+            let isbn = $(this).data("id");
+            console.log(isbn);
+
+            //console.log("this: ", $(this));
+            //console.log($(this).attr("id"));
+            //console.log(this.id);
+
+            //!-- let viewerCanvasDomElemId = "viewerCanvas-" + isbn;
+            let googleViewer = new google.books.DefaultViewer(this);
+
+            //Load the viewer for each book using it's ISBN
+            googleViewer.load("ISBN:" + isbn, null);
+        })
+    }
+    //function initialize() {
+    //var viewer = new google.books.defaultViewer(document.getElementById("viewerCanvas"));
+    //viewer.load("ISBN:viewerCanvas", null, alertInitialized);
+    //viewer.load("ISBN:1234", alertNotFound);
+    //}
+
+    function alertInitialized() {
+        alert("book successfully loaded and initialized!");
+    }
+
+    function alertNotFound() {
+        alert("could not embed the book!");
+    }
+
+
 </script>
 
 
