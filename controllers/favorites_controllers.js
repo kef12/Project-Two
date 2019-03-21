@@ -29,15 +29,14 @@ router.get("/index", function(req, res) {
 
 // Favorite a Book
 router.post("/book/favorite/:id", function(req, res) {
-  // Create a new burger devourer (and also associate it to the eaten burger's id)
   models.favorite
     .create({
-      burgerId: req.params.id
+      bookId: req.params.id
     })
 
-    // Then, select the eaten burger by it's id
+    // Then, select the book by it's id
     .then(function() {
-      models.burgers
+      models.books
         .findOne({ where: { id: req.params.id } })
 
         // Then, use the returned book object to...
@@ -47,10 +46,6 @@ router.post("/book/favorite/:id", function(req, res) {
           .update({
               favorite: true,
             })
-
-            // Then, the burger is devoured, so refresh the page
-            // .then(function() {
-            //   res.redirect("/index");
             );
         });
   
