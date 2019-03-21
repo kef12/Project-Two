@@ -6,7 +6,7 @@
         <div class="carousel carousel-slider center">
             <!--<div class="carousel-fixed-item center">-->
             <!--</1-><a class="btn btn-small favBtn">Fav Button</a>->
-                <!-- <a class="btn btn-small gitBtn" href="https://github.com/k8blanco">GITHUB</a> -->
+                <! <a class="btn btn-small gitBtn" href="https://github.com/k8blanco">GITHUB</a> -->
             <!--</div>-->
             {{#each booksArray}}
             <div class="row">
@@ -15,17 +15,20 @@
                         style="width: 50%; height: 100%"></div>
                     <div class="card col s6 push s6 z-depth-0" id="details">
                         <p>{{this.gbDetails}}</p>
-                        <button data-target="modal1" class="btn favBtn red accent-3 modal-trigger"><i
+
+                        <!--Fav Post Button-->
+                        <button data-title="{{this.gbTitle}}" data-author="{{this.gbAuthors}}" data-target="modal1" class="btn favBtn red accent-3 modal-trigger"><i
                                 class="fas fa-heart"></i> Add to Favorites <i class="fas fa-heart"></i></button>
+
                     </div>
 
-                    <!--modal for "added to favorites"-->
-                    <!-- Modal Structure -->
+                    <!-- "Added to Favs" Modal -->
                     <div id="modal1" class="modal">
                         <div class="modal-content">
                             <h4>"{{this.gbTitle}}"</h4>
                             <p>added to favorites!</p>
-                            <button class="btn submit">See Favorites</button>
+                            <button class="btn red accent-3" id="favBtnLink"><a href="/book/favorite"
+                                    class="white-text"><i class="fas fa-heart"></i> Go to Favorites</a></button>
                         </div>
                         <div class="modal-footer">
                             <a href="#!" class="modal-close waves-effect waves-green btn-flat">Awesome!</a>
@@ -92,6 +95,11 @@
                     indicators: true
                 });
             });
+
+            $(".favBtn").on("click", function {
+                let title = $(this).data("title");
+                let author = $(this).data("author");
+            })
 
             //embedded viewer scripts
             google.books.load();
