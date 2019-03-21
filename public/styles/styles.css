@@ -3,16 +3,16 @@
 }
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   font-size: 20px;
-  background-image: url("../img/books-1245690_1920.jpg");
+  /* background-image: url("../img/books-1245690_1920.jpg"); */
 }
 
 .nav,
 .nav-wrapper {
-  background: rgb(230,218,206); /* for browsers without RGBA support */
-  background: rgba(230,218,206,0.95); 
-  font-family: 'Merriweather', serif;
+  /* background: rgb(230,218,206); /* for browsers without RGBA support */
+  /* background: rgba(230,218,206,0.95);  */ 
+  font-family: 'Quicksand,' sans-serif;
   padding-right: 20px;
 }
 
@@ -21,18 +21,11 @@ body {
 
 }
 
-h1,
-h2,
-h3 {
-  font-family: 'Merriweather', serif;
-}
-
 /* Search Page */
 #intro {
   padding: 20px;
-  margin-top: 37rem;
+  margin-top: 22rem;
 }
-
 
 /* Results Page */
 
@@ -40,9 +33,7 @@ h3 {
   min-height: 600px;
 }
 
-.details {
-  margin: 20px;
-  padding: 10px;
+#details {
   overflow: scroll;
 }
 
@@ -65,6 +56,9 @@ margin-left:auto;
   font-size: 90px;
 /* background-color: white; */
 }
+
+/* Favs Page */
+
 
 .video-container {
   position: absolute;

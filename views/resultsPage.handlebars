@@ -10,25 +10,27 @@
             <!--</div>-->
             {{#each booksArray}}
             <div class="row">
-                <div class="carousel-item white">
+                <div class="carousel-item brown lighten-5">
                     <div class="col s6" id="viewerCanvas-{{this.gbISBN}}" data-id="{{this.gbISBN}}"
                         style="width: 50%; height: 100%"></div>
-                    <div class="card col s6 push s6 z-depth-0" id="details">
+                    <div class="card col s6 push s6 z-depth-0 brown lighten-5" id="details">
                         <p>{{this.gbDetails}}</p>
 
                         <!--Fav Post Button-->
-                        <button data-title="{{this.gbTitle}}" data-author="{{this.gbAuthors}}" data-target="modal1" class="btn favBtn red accent-3 modal-trigger"><i
-                                class="fas fa-heart"></i> Add to Favorites <i class="fas fa-heart"></i></button>
+                        <button data-title="{{this.gbTitle}}" data-author="{{this.gbAuthors}}" data-target="modal1"
+                            class="btn favBtn amber modal-trigger"><i class="fas fa-heart"></i> Add to Favorites
+                            <i class="fas fa-heart"></i></button>
 
                     </div>
 
                     <!-- "Added to Favs" Modal -->
                     <div id="modal1" class="modal">
                         <div class="modal-content">
-                            <h4>"{{this.gbTitle}}"</h4>
-                            <p>added to favorites!</p>
-                            <button class="btn red accent-3" id="favBtnLink"><a href="/book/favorite"
-                                    class="white-text"><i class="fas fa-heart"></i> Go to Favorites</a></button>
+                            <h4 class="amber-text" id="modalTitle">"{{this.gbTitle}}" by {{this.gbAuthors}}</h4>
+                            <h5 id="modalText">added to favorites!</h5>
+                            <br>
+                            <button class="btn amber" id="favBtnLink"><a href="/book/favorite" class="white-text"><i
+                                        class="fas fa-heart"></i> Go to Favorites</a></button>
                         </div>
                         <div class="modal-footer">
                             <a href="#!" class="modal-close waves-effect waves-green btn-flat">Awesome!</a>
@@ -44,112 +46,73 @@
 
 
 
-<!-- Begin Favorite Functionality -->
 
-<!--Dynamically Insert New Books to Favorites List -->
-{{#each booksArray}}
-{{#unless favorited}}
-<form>
-    <div class="results-list">
-        <li class="list-group">{{id}}
-            {{this.gbId}}</li>
-        <span class="input-group-btn">
-            <button class="btn btn-favorite-button" type="submit">Add to Favorites!</button>
-        </span>
-    </div>
-</form>
-{{/unless}}
-{{/each}}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
+<script src="/js/index.js"></script>
 
-<div class="col-md-4"></div>
+<script>
 
-<!-- Right side -->
-<div class="col-md-4">
-    <h3 class="submitFont">Favorite Books</h3>
-    <div id="alreadyFavorited">
+    //carousel scripts
+    $(document).ready(function () {
+        $(".carousel").carousel();
+        $(".modal").modal();
 
-        <!-- Dynamically Insert Books Here -->
-        {{#each books}}
-        <!--favorited is implicit because table is only favorites-->
-        {{#if this.favorited}}
-        <div class="input-group">
-            <li class="form-control">{{this.id}}. {{this.book_name}}</li>
-        </div>
-        {{/if}}
-        {{/each}}
+        $(".carousel.carousel-slider").carousel({
+            fullWidth: true,
+            indicators: true
+        });
+    });
 
+    $(".favBtn").on("click", function () {
+        let title = $(this).data("title");
+        let author = $(this).data("author");
+        console.log("you clicked me!");
 
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
-        <script src="/js/index.js"></script>
-
-        <script>
-
-            //carousel scripts
-            $(document).ready(function () {
-                $(".carousel").carousel();
-                $(".modal").modal();
-
-                $(".carousel.carousel-slider").carousel({
-                    fullWidth: true,
-                    indicators: true
-                });
+        $.post("book/favorite/",
+            {
+                title: title,
+                body: author
+            },
+            function (data, status) {
+                console.log("posted favorite");
             });
+    });
 
-            $(".favBtn").on("click", function() {
-                let title = $(this).data("title");
-                let author = $(this).data("author");
-                console.log("you clicked me!");
+    //embedded viewer scripts
+    google.books.load();
+    google.books.setOnLoadCallback(initializeViewers);
 
-                $.post("book/favorite/", 
-                {
-                    title: title,
-                    body: author
-                },
-                function (data, status) {
-                    console.log("posted favorite");
-                });
-            });
+    //initialize Google View for each book
+    function initializeViewers() {
 
-            //embedded viewer scripts
-            google.books.load();
-            google.books.setOnLoadCallback(initializeViewers);
+        //loop through each viewer canvas - anything w/ an id starting with "viewerCanvas"
+        $("[id^=viewerCanvas]").each(function () {
+            //Create a new viewer for each of them
+            let isbn = $(this).data("id");
+            console.log(isbn);
 
-            //initialize Google View for each book
-            function initializeViewers() {
+            //console.log("this: ", $(this));
+            //console.log($(this).attr("id"));
+            //console.log(this.id);
 
-                //loop through each viewer canvas - anything w/ an id starting with "viewerCanvas"
-                $("[id^=viewerCanvas]").each(function () {
-                    //Create a new viewer for each of them
-                    let isbn = $(this).data("id");
-                    console.log(isbn);
+            //!-- let viewerCanvasDomElemId = "viewerCanvas-" + isbn;
+            let googleViewer = new google.books.DefaultViewer(this);
 
-                    //console.log("this: ", $(this));
-                    //console.log($(this).attr("id"));
-                    //console.log(this.id);
+            //Load the viewer for each book using it's ISBN
+            googleViewer.load("ISBN:" + isbn, null);
+        })
+    };
 
-                    //!-- let viewerCanvasDomElemId = "viewerCanvas-" + isbn;
-                    let googleViewer = new google.books.DefaultViewer(this);
+    function alertInitialized() {
+        alert("book successfully loaded and initialized!");
+    };
 
-                    //Load the viewer for each book using it's ISBN
-                    googleViewer.load("ISBN:" + isbn, null);
-                })
-            };
-
-            function alertInitialized() {
-                alert("book successfully loaded and initialized!");
-            };
-
-            function alertNotFound() {
-                alert("could not embed the book!");
-            }
+    function alertNotFound() {
+        alert("could not embed the book!");
+    }
 
 
 
-        </script>
-
-
-
-
- 
+</script>
