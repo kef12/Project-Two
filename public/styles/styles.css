@@ -33,19 +33,20 @@ h3 {
   margin-top: 37rem;
 }
 
+
 /* Results Page */
 /* .container {
-  height: 800px;
+  height: 200px !important;
 } */
 
-/* .carousel {
-  height: 75%;
-} */
+.carousel {
+  min-height: 600px;
+}
 
-.resp-container {
+/* .resp-container {
   position: relative;
   overflow: scroll;
-}
+} */
 
 #fplogo {
   display:block;
