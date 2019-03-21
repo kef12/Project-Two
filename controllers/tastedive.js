@@ -6,7 +6,7 @@ var tdQueryUrl =
     //base url with spot to plug in search term from search box
     "https://tastedive.com/api/similar?" +
     //limit type to books and only 1 !!!!CHANGE FOR DEPLOY
-    "type=books&limit=1" +
+    "type=books&limit=5" +
     //plugs in api key
     "&k=" +
     tdApiKey +
