@@ -92,7 +92,7 @@ module.exports = function (app) {
 
   //Details route
   app.get("/book/favorite/", function (req, res) {
-    res.render("favoritesPage");
+    res.render("favorites");
   });
 
 

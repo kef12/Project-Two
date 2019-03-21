@@ -13,7 +13,7 @@ router.get("/", function(req, res) {
 });
 
 // Index Page (render all books to DOM)
-router.get("/index", function(req, res) {
+router.get("/detailsPage", function(req, res) {
   // Sequelize Query to get all books from database.
   models.books
     .findAll({
@@ -23,7 +23,7 @@ router.get("/index", function(req, res) {
       // Pass the returned data into a Handlebars object and then render it
       var hbsObject = { books: data };
       // console.log(data);
-      res.render("index", hbsObject);
+      res.render("detailsPage", hbsObject);
     });
 });
 
