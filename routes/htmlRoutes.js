@@ -90,7 +90,7 @@ module.exports = function (app) {
   });
 
 
-  //Details route
+  //Favorites route
   app.get("/book/favorite/", function (req, res) {
     res.render("favorites");
   });

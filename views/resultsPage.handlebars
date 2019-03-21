@@ -5,24 +5,39 @@
     <div class="container">
         <div class="carousel carousel-slider center">
             <!--<div class="carousel-fixed-item center">-->
-                <!--</1-><a class="btn btn-small favBtn">Fav Button</a>->
+            <!--</1-><a class="btn btn-small favBtn">Fav Button</a>->
                 <!-- <a class="btn btn-small gitBtn" href="https://github.com/k8blanco">GITHUB</a> -->
             <!--</div>-->
             {{#each booksArray}}
             <div class="row">
                 <div class="carousel-item white">
-                    <div class="col s6" id="viewerCanvas-{{this.gbISBN}}" data-id="{{this.gbISBN}}" style="width: 50%; height: 100%"></div>
+                    <div class="col s6" id="viewerCanvas-{{this.gbISBN}}" data-id="{{this.gbISBN}}"
+                        style="width: 50%; height: 100%"></div>
                     <div class="card col s6 push s6 z-depth-0" id="details">
                         <p>{{this.gbDetails}}</p>
-                        <button class="btn favBtn red accent-3"><i class="fas fa-heart"></i> Add to Favorites <i class="fas fa-heart"></i></button>
+                        <button data-target="modal1" class="btn favBtn red accent-3 modal-trigger"><i
+                                class="fas fa-heart"></i> Add to Favorites <i class="fas fa-heart"></i></button>
                     </div>
+
+                    <!--modal for "added to favorites"-->
+                    <!-- Modal Structure -->
+                    <div id="modal1" class="modal">
+                        <div class="modal-content">
+                            <h4>"{{this.gbTitle}}"</h4>
+                            <p>added to favorites!</p>
+                            <button class="btn submit">See Favorites</button>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Awesome!</a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             {{/each}}
         </div>
     </div>
 </div>
-
 
 
 
@@ -70,6 +85,7 @@
             //carousel scripts
             $(document).ready(function () {
                 $(".carousel").carousel();
+                $(".modal").modal();
 
                 $(".carousel.carousel-slider").carousel({
                     fullWidth: true,
@@ -101,11 +117,6 @@
                     googleViewer.load("ISBN:" + isbn, null);
                 })
             }
-            //function initialize() {
-            //var viewer = new google.books.defaultViewer(document.getElementById("viewerCanvas"));
-            //viewer.load("ISBN:viewerCanvas", null, alertInitialized);
-            //viewer.load("ISBN:1234", alertNotFound);
-            //}
 
             function alertInitialized() {
                 alert("book successfully loaded and initialized!");
@@ -114,6 +125,7 @@
             function alertNotFound() {
                 alert("could not embed the book!");
             }
+
 
 
         </script>
