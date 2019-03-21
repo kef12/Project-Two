@@ -5,7 +5,7 @@
 body {
   font-family: 'Quicksand', sans-serif;
   font-size: 20px;
-  /* background-image: url("../img/books-1245690_1920.jpg"); */
+  background-image: url("../img/notebookpaper.jpeg");
 }
 
 .nav,
@@ -24,7 +24,9 @@ body {
 /* Search Page */
 #intro {
   padding: 20px;
-  margin-top: 22rem;
+  margin-top: 28rem;
+  background-image: url(../img/notebookpaper.jpeg);
+  background-repeat: repeat-x;
 }
 
 /* Results Page */
@@ -43,6 +45,9 @@ body {
   margin-top: 20px;
 }
 
+.tbox{
+  padding-top:130px;
+}
 
 #fplogo {
   display:block;
