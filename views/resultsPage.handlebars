@@ -5,17 +5,36 @@
     <div class="container">
         <div class="carousel carousel-slider center">
             <!--<div class="carousel-fixed-item center">-->
-                <!--</1-><a class="btn btn-small favBtn">Fav Button</a>->
-                <!-- <a class="btn btn-small gitBtn" href="https://github.com/k8blanco">GITHUB</a> -->
+            <!--</1-><a class="btn btn-small favBtn">Fav Button</a>->
+                <! <a class="btn btn-small gitBtn" href="https://github.com/k8blanco">GITHUB</a> -->
             <!--</div>-->
             {{#each booksArray}}
             <div class="row">
                 <div class="carousel-item white">
-                    <div class="col s6" id="viewerCanvas-{{this.gbISBN}}" data-id="{{this.gbISBN}}" style="width: 50%; height: 100%"></div>
+                    <div class="col s6" id="viewerCanvas-{{this.gbISBN}}" data-id="{{this.gbISBN}}"
+                        style="width: 50%; height: 100%"></div>
                     <div class="card col s6 push s6 z-depth-0" id="details">
                         <p>{{this.gbDetails}}</p>
-                        <button class="btn favBtn red accent-3"><i class="fas fa-heart"></i> Add to Favorites <i class="fas fa-heart"></i></button>
+
+                        <!--Fav Post Button-->
+                        <button data-title="{{this.gbTitle}}" data-author="{{this.gbAuthors}}" data-target="modal1" class="btn favBtn red accent-3 modal-trigger"><i
+                                class="fas fa-heart"></i> Add to Favorites <i class="fas fa-heart"></i></button>
+
                     </div>
+
+                    <!-- "Added to Favs" Modal -->
+                    <div id="modal1" class="modal">
+                        <div class="modal-content">
+                            <h4>"{{this.gbTitle}}"</h4>
+                            <p>added to favorites!</p>
+                            <button class="btn red accent-3" id="favBtnLink"><a href="/book/favorite"
+                                    class="white-text"><i class="fas fa-heart"></i> Go to Favorites</a></button>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Awesome!</a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             {{/each}}
@@ -25,13 +44,12 @@
 
 
 
-
 <!-- Begin Favorite Functionality -->
 
 <!--Dynamically Insert New Books to Favorites List -->
 {{#each booksArray}}
 {{#unless favorited}}
-<form action="book/favorite/{{id}}" method="POST">
+<form>
     <div class="results-list">
         <li class="list-group">{{id}}
             {{this.gbId}}</li>
@@ -52,6 +70,7 @@
 
         <!-- Dynamically Insert Books Here -->
         {{#each books}}
+        <!--favorited is implicit because table is only favorites-->
         {{#if this.favorited}}
         <div class="input-group">
             <li class="form-control">{{this.id}}. {{this.book_name}}</li>
@@ -70,10 +89,26 @@
             //carousel scripts
             $(document).ready(function () {
                 $(".carousel").carousel();
+                $(".modal").modal();
 
                 $(".carousel.carousel-slider").carousel({
                     fullWidth: true,
                     indicators: true
+                });
+            });
+
+            $(".favBtn").on("click", function() {
+                let title = $(this).data("title");
+                let author = $(this).data("author");
+                console.log("you clicked me!");
+
+                $.post("book/favorite/", 
+                {
+                    title: title,
+                    body: author
+                },
+                function (data, status) {
+                    console.log("posted favorite");
                 });
             });
 
@@ -100,60 +135,21 @@
                     //Load the viewer for each book using it's ISBN
                     googleViewer.load("ISBN:" + isbn, null);
                 })
-            }
-            //function initialize() {
-            //var viewer = new google.books.defaultViewer(document.getElementById("viewerCanvas"));
-            //viewer.load("ISBN:viewerCanvas", null, alertInitialized);
-            //viewer.load("ISBN:1234", alertNotFound);
-            //}
+            };
 
             function alertInitialized() {
                 alert("book successfully loaded and initialized!");
-            }
+            };
 
             function alertNotFound() {
                 alert("could not embed the book!");
             }
 
 
+
         </script>
 
 
 
-        <!-- Code for Carousel, getting a simple list to populate first though -->
-        {{!-- <div class="carousel carousel-slider center">
-    <div class="carousel-fixed-item center">
-        <a class="btn waves-effect white grey-text darken-text-2">button</a>
-    </div>
-    <div class="carousel-item red white-text" href="#one!">
-        <h2>First Panel</h2>
-        <p class="white-text">This is your first panel</p>
-    </div>
-    <div class="carousel-item amber white-text" href="#two!">
-        <h2>Second Panel</h2>
-        <p class="white-text">This is your second panel</p>
-    </div>
-    <div class="carousel-item green white-text" href="#three!">
-        <h2>Third Panel</h2>
-        <p class="white-text">This is your third panel</p>
-    </div>
-    <div class="carousel-item blue white-text" href="#four!">
-        <h2>Fourth Panel</h2>
-        <p class="white-text">This is your fourth panel</p>
-    </div>
-</div> --}}
 
-
-
-
-
-        {{!-- <h3>Examples:</h3>
-
-        <ul id="example-list" class="list-group">
-          {{#each examples}}
-          <li data-id="{{this.id}}" class="list-group-item">
-            <a href="example/{{this.id}}">{{this.text}}</a>
-            <button class="btn btn-danger float-right delete">ｘ</button>
-          </li>
-          {{/each}}
-        </ul> --}}
+ 

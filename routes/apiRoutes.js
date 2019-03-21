@@ -19,4 +19,12 @@ app.post("/api/books", function(req, res) {
   });
 });
 
+//Add a new book to favorites POST route
+app.post("/book/favorite", function (req, res) {
+  console.log("posting books in API routes");
+  db.Books.create(req.body).then(function(dbBooks) {
+    res.json(dbBooks);
+  });
+});
+
 };
