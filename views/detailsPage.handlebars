@@ -1,0 +1,81 @@
+<!-- Right side -->
+{{!-- <div class="col-md-4">
+    <h3 class="submitFont">Favorite Books</h3>
+    <div id="alreadyFavorited">
+
+        <!-- Dynamically Insert Books Here -->
+        {{#each books}}
+        {{#if this.favorited}}
+        <div class="input-group">
+            <li class="form-control">{{this.id}}. {{this.book_name}}</li>
+        </div>
+        {{/if}}
+        {{/each}} --}}
+
+    <div class="container fav-container">
+        <div class="card">
+            <h3 class="submitFont">Everyone is Reading:</h3>
+            <ul>
+               <p></p>
+            </ul>
+        </div>
+    </div>
+
+
+        <script>
+            $(document).ready(function () {
+                //getting a reference to the favorites button where user adds a new fav
+                var $newFavInput = $("input.new-item")
+                //our new fav will go inside favContainer
+                var $favContainer = $(".fav-container");
+
+
+                //event listener for adding fav
+                $(document).on("click", ".favBtn", insertFav)
+
+                //our initial favs array
+                getFavs();
+
+                //Resets the favs displayed with new favs from the DB
+                function initializeFavs() {
+                    $favContainer.empty();
+                    var rowsToAdd = [];
+                    for (var i = 0; i < favs.length; i++) {
+                        rowsToAdd.push(createNewRow(favs[i]));
+                    }
+                    $favContainer.prepend(rowsToAdd);
+                }
+
+                //this function grabs the favs from the DB and updates the view
+                function getFavs() {
+                    $.get("/api/favs", function (data) {
+                        favs = data;
+                        initializeFavs()
+                    });
+                }
+
+                //this function deletes a fav when the user clicks the delete button
+                function deleteFav(event) {
+                    event.stopPropagation();
+                    var id = $(this).data("id");
+                    $.ajax({
+                        method: "DELETE",
+                        url: "/api/favs/" + id
+                    }).then(getFavs);
+                }
+
+                //this function inserts a new fav into our db and then updates the view
+                function insertFav(event) {
+                    event.preventDefault();
+                    var fav = {
+                        text: "testing",
+                    };
+
+                    $.post("/api/favs", fav, getFavs);
+                }
+            });
+
+
+
+};
+        </script>

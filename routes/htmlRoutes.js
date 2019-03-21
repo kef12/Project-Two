@@ -4,8 +4,7 @@ var gbQueryUrl = require("../controllers/googleBooks")
 var axios = require("axios");
 var path = require("path");
 var gbResponse;
-var responseArray = [];
-var responseCounter = 0;
+
 
 //Routes
 // =============================================================
@@ -19,11 +18,14 @@ module.exports = function (app) {
 
   //Route to hit after submit button - this is where the TD data will publish in a carousel
   app.get("/resultsPage", function (req, res) {
+    var responseArray = [];
+    var responseCounter = 0;
+
     //get search term
     let bookSearchTerm = req.query.bookTerm;
 
     //inject search term into tdQueryUrl
-    let tdApiQueryUrl = tdQueryUrl.replace("[[SEARCH_TERM]]", bookSearchTerm)
+    let tdApiQueryUrl = tdQueryUrl + "&q=" + bookSearchTerm;
 
     //TD axios call (will get moved too)
     axios
@@ -34,12 +36,12 @@ module.exports = function (app) {
 
       .then(function (response) {
         //for loop to log td response names
-        for (var i = 0; i < response.data.Similar.Results.length; i++) {
+        let totalResponses = response.data.Similar.Results.length;
+        for (var i = 0; i < totalResponses; i++) {
           let tdResponseNames = response.data.Similar.Results[i].Name;
 
           //inject search names into gbQueryUrl
-          let gbApiQueryUrl = gbQueryUrl.replace("[[SEARCH_TERM]]", tdResponseNames)
-          // console.log("GB API Request: " + gbApiQueryUrl)
+          let gbApiQueryUrl = gbQueryUrl + "&q=" + tdResponseNames;
 
           //axios call to google books api
           axios
@@ -50,30 +52,34 @@ module.exports = function (app) {
 
             .then(function (response) {
               var gbResponse = {
+                gbTitle: response.data.items[0].volumeInfo.title,
+                gbAuthors: response.data.items[0].volumeInfo.authors[0],
                 gbId: response.data.items[0].id,
                 gbLink: response.data.items[0].selfLink,
                 gbInfo: response.data.items[0].volumeInfo,
                 gbISBN: response.data.items[0].volumeInfo.industryIdentifiers[1].identifier,
                 gbDetails: response.data.items[0].volumeInfo.description
               }
-              // console.log("GB Response Data: " + gbResponse.gbInfo.title);
+
               responseArray.push(gbResponse);
               responseCounter++;
 
               //if we have all 5 results ready in the array/to manage asynchronicity
-              if (responseCounter >= 10) {
+              if (responseCounter >= totalResponses) {
                 //give resultsPage.handlebars the response.data
-               var gbResponseData = {booksArray: responseArray}
-              //  console.log(JSON.stringify(gbResponseData));
-               res.render("resultsPage", gbResponseData);
+                var gbResponseData = {
+                  booksArray: responseArray
+                }
+                //  console.log(JSON.stringify(gbResponseData));
+                res.render("resultsPage", gbResponseData);
 
-             };
+              };
             })
             //catch any gb response errors
             .catch(function (err) {
               console.log(err);
             });
-           
+
         };
       })
       //catch any td response errors
@@ -83,27 +89,10 @@ module.exports = function (app) {
 
   });
 
-  // app.get("/fullWidthCarousel", function(req, res) {
-  //   res.render("fullWidthCarousel");
-  // })
 
   //Details route
   app.get("/book/favorite/", function (req, res) {
     res.render("favoritesPage");
-    //goodreads call - need to move this
-    // axios
-    //   .get(grQueryUrl, {
-    //     method: "get",
-    //     responseType: "json"
-    //   })
-    //   //handle success
-    //   .then(function(response) {
-    //     console.log(response);
-    //   })
-    //   //handle error
-    //   .catch(function(err) {
-    //     console.log(err);
-    //   });
   });
 
 

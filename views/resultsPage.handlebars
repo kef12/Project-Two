@@ -4,20 +4,25 @@
 <div class="resp-container">
     <div class="container">
         <div class="carousel carousel-slider center">
+            <!--<div class="carousel-fixed-item center">-->
+                <!--</1-><a class="btn btn-small favBtn">Fav Button</a>->
+                <!-- <a class="btn btn-small gitBtn" href="https://github.com/k8blanco">GITHUB</a> -->
+            <!--</div>-->
             {{#each booksArray}}
             <div class="row">
                 <div class="carousel-item red">
-                    <div class="col s6" id="viewerCanvas-{{this.gbISBN}}" data-id="{{this.gbISBN}}"></div>
-                    <div class="col s6 push s6">
+                    <div class="col s6" id="viewerCanvas-{{this.gbISBN}}" data-id="{{this.gbISBN}}" style="width: 300px; height: 500px"></div>
+                    <div class="card col s6 push s6" id="details">
                         <p>{{this.gbDetails}}</p>
+                        <button class="btn small-btn favBtn">Heart</button>
                     </div>
                 </div>
-
             </div>
             {{/each}}
         </div>
     </div>
 </div>
+
 
 
 
@@ -53,40 +58,6 @@
         </div>
         {{/if}}
         {{/each}}
-
-        <!--List-->
-        {{!-- <div class="container">
-    <div class="card">
-        <ul id="results-list" class="list-group">
-            {{#each booksArray}}
-            <li data-id="{{this.gbId}}" class="list-group-item">
-                <span>{{this.gbInfo.title}}</span>
-                <button class="btn">Heart!</button>
-            </li>
-            {{/each}}
-        </ul>
-    </div>
-</div> --}}
-
-        <!--Full-Width Carousel w/ Descriptions-->
-        {{!-- <div class="container">
-    <div class="carousel carousel-slider center">
-        {{#each booksArray}}
-        <div class="carousel-fixed-item center">
-            <!--More Info buttons here??-->
-            <a class="btn waves-effect white grey-text darken-text-2">Details</a>
-        </div>
-        {{/each}}
-        {{#each booksArray}}
-        <div class="carousel-item red white-text">
-            <img src="{{this.gbInfo.imageLinks.thumbnail}}">
-            <h2>{{this.gbInfo.title}}</h2>
-            <h3>Authors</h3>
-            <p class="white-text">Short description</p>
-        </div>
-        {{/each}}
-    </div>
-</div> --}}
 
 
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
