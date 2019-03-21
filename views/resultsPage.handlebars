@@ -49,7 +49,7 @@
 <!--Dynamically Insert New Books to Favorites List -->
 {{#each booksArray}}
 {{#unless favorited}}
-<form action="book/favorite/{{id}}" method="POST">
+<form>
     <div class="results-list">
         <li class="list-group">{{id}}
             {{this.gbId}}</li>
@@ -70,6 +70,7 @@
 
         <!-- Dynamically Insert Books Here -->
         {{#each books}}
+        <!--favorited is implicit because table is only favorites-->
         {{#if this.favorited}}
         <div class="input-group">
             <li class="form-control">{{this.id}}. {{this.book_name}}</li>
@@ -96,10 +97,20 @@
                 });
             });
 
-            $(".favBtn").on("click", function {
+            $(".favBtn").on("click", function() {
                 let title = $(this).data("title");
                 let author = $(this).data("author");
-            })
+                console.log("you clicked me!");
+
+                $.post("book/favorite/", 
+                {
+                    title: title,
+                    body: author
+                },
+                function (data, status) {
+                    console.log("posted favorite");
+                });
+            });
 
             //embedded viewer scripts
             google.books.load();
@@ -124,11 +135,11 @@
                     //Load the viewer for each book using it's ISBN
                     googleViewer.load("ISBN:" + isbn, null);
                 })
-            }
+            };
 
             function alertInitialized() {
                 alert("book successfully loaded and initialized!");
-            }
+            };
 
             function alertNotFound() {
                 alert("could not embed the book!");
@@ -140,40 +151,5 @@
 
 
 
-        <!-- Code for Carousel, getting a simple list to populate first though -->
-        {{!-- <div class="carousel carousel-slider center">
-    <div class="carousel-fixed-item center">
-        <a class="btn waves-effect white grey-text darken-text-2">button</a>
-    </div>
-    <div class="carousel-item red white-text" href="#one!">
-        <h2>First Panel</h2>
-        <p class="white-text">This is your first panel</p>
-    </div>
-    <div class="carousel-item amber white-text" href="#two!">
-        <h2>Second Panel</h2>
-        <p class="white-text">This is your second panel</p>
-    </div>
-    <div class="carousel-item green white-text" href="#three!">
-        <h2>Third Panel</h2>
-        <p class="white-text">This is your third panel</p>
-    </div>
-    <div class="carousel-item blue white-text" href="#four!">
-        <h2>Fourth Panel</h2>
-        <p class="white-text">This is your fourth panel</p>
-    </div>
-</div> --}}
 
-
-
-
-
-        {{!-- <h3>Examples:</h3>
-
-        <ul id="example-list" class="list-group">
-          {{#each examples}}
-          <li data-id="{{this.id}}" class="list-group-item">
-            <a href="example/{{this.id}}">{{this.text}}</a>
-            <button class="btn btn-danger float-right delete">ｘ</button>
-          </li>
-          {{/each}}
-        </ul> --}}
+ 

@@ -91,8 +91,23 @@ module.exports = function (app) {
 
 
   //Favorites route
-  app.get("/book/favorite/", function (req, res) {
-    res.render("favorites");
+  // app.get("/book/favorite/", function (req, res) {
+  //   db.Books.findAll({}).then(function(favorites) {
+  //     res.render("favorites", favorites)
+  //   });
+  // });
+
+  app.get("/book/favorite", function(req, res) {
+    console.log("in the app.get for favorites");
+    // Sequelize Query to get all books from database.
+    db.Books
+      .findAll({})
+      .then(function(data) {
+        // Pass the returned data into a Handlebars object and then render it
+        var hbsObject = { books: data };
+        // console.log(data);
+        res.render("favorites", hbsObject);
+      });
   });
 
 

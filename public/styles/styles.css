@@ -10,7 +10,6 @@ body {
 
 .nav,
 .nav-wrapper {
-  background-color: #fff8e1;
   background: rgb(230,218,206); /* for browsers without RGBA support */
   background: rgba(230,218,206,0.95); 
   font-family: 'Merriweather', serif;
