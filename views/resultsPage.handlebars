@@ -4,16 +4,17 @@
 <div class="resp-container">
     <div class="container">
         <div class="carousel carousel-slider center">
-            <div class="carousel-fixed-item center">
-                <a class="btn btn-small favBtn">Fav Button</a>
+            <!--<div class="carousel-fixed-item center">-->
+                <!--</1-><a class="btn btn-small favBtn">Fav Button</a>->
                 <!-- <a class="btn btn-small gitBtn" href="https://github.com/k8blanco">GITHUB</a> -->
-            </div>
+            <!--</div>-->
             {{#each booksArray}}
             <div class="row">
                 <div class="carousel-item red">
                     <div class="col s6" id="viewerCanvas-{{this.gbISBN}}" data-id="{{this.gbISBN}}" style="width: 300px; height: 500px"></div>
                     <div class="card col s6 push s6" id="details">
                         <p>{{this.gbDetails}}</p>
+                        <button class="btn small-btn favBtn">Heart</button>
                     </div>
                 </div>
             </div>
