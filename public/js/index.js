@@ -40,20 +40,6 @@ $searchText.keypress(function (e) {
 });
 
 
-//initialize carousel -- uncomment when ready for carousel
-// $(document).ready(function(){
-//   $(".carousel.carousel-slider").carousel({
-//     fullWidth: true,
-//     indicators: true
-//   });
-// });
-    
-
-// console.log("initializing carousel");
-
-
-
-
 
 
 
