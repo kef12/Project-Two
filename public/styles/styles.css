@@ -35,18 +35,22 @@ h3 {
 
 
 /* Results Page */
-/* .container {
-  height: 200px !important;
-} */
 
 .carousel {
   min-height: 600px;
 }
 
-/* .resp-container {
-  position: relative;
+.details {
+  margin: 20px;
+  padding: 10px;
   overflow: scroll;
-} */
+}
+
+.favBtn {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  margin-top: 20px;
+}
 
 #fplogo {
   display:block;
@@ -60,7 +64,6 @@ margin-left:auto;
   font-size: 90px;
 /* background-color: white; */
 }
-
 
 .video-container {
   position: absolute;
