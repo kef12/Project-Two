@@ -5,17 +5,57 @@
     <div class="container">
         <div class="carousel carousel-slider center">
             {{#each booksArray}}
-            <div class="carousel-item red">
-                <div id="viewerCanvas-{{this.gbISBN}}" data-id="{{this.gbISBN}}" style="width: 50%; height: 100%"></div>
-                
+            <div class="row">
+                <div class="carousel-item red">
+                    <div class="col s6" id="viewerCanvas-{{this.gbISBN}}" data-id="{{this.gbISBN}}"></div>
+                    <div class="col s6 push s6">
+                        <p>{{this.gbDetails}}</p>
+                    </div>
+                </div>
+
             </div>
             {{/each}}
         </div>
     </div>
 </div>
 
-<!--List-->
-<!--<div class="container">
+
+
+<!-- Begin Favorite Functionality -->
+
+<!--Dynamically Insert New Books to Favorites List -->
+{{#each booksArray}}
+{{#unless favorited}}
+<form action="book/favorite/{{id}}" method="POST">
+    <div class="results-list">
+        <li class="list-group">{{id}}
+            {{this.gbId}}</li>
+        <span class="input-group-btn">
+            <button class="btn btn-favorite-button" type="submit">Add to Favorites!</button>
+        </span>
+    </div>
+</form>
+{{/unless}}
+{{/each}}
+
+<div class="col-md-4"></div>
+
+<!-- Right side -->
+<div class="col-md-4">
+    <h3 class="submitFont">Favorite Books</h3>
+    <div id="alreadyFavorited">
+
+        <!-- Dynamically Insert Books Here -->
+        {{#each books}}
+        {{#if this.favorited}}
+        <div class="input-group">
+            <li class="form-control">{{this.id}}. {{this.book_name}}</li>
+        </div>
+        {{/if}}
+        {{/each}}
+
+        <!--List-->
+        {{!-- <div class="container">
     <div class="card">
         <ul id="results-list" class="list-group">
             {{#each booksArray}}
@@ -26,10 +66,10 @@
             {{/each}}
         </ul>
     </div>
-</div>-->
+</div> --}}
 
-<!--Full-Width Carousel w/ Descriptions-->
-{{!-- <div class="container">
+        <!--Full-Width Carousel w/ Descriptions-->
+        {{!-- <div class="container">
     <div class="carousel carousel-slider center">
         {{#each booksArray}}
         <div class="carousel-fixed-item center">
@@ -49,68 +89,68 @@
 </div> --}}
 
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
-<script src="/js/index.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
+        <script src="/js/index.js"></script>
 
-<script>
+        <script>
 
-    //carousel scripts
-    $(document).ready(function () {
-        $(".carousel").carousel();
+            //carousel scripts
+            $(document).ready(function () {
+                $(".carousel").carousel();
 
-        $(".carousel.carousel-slider").carousel({
-            fullWidth: true,
-            indicators: true
-        });
-    });
+                $(".carousel.carousel-slider").carousel({
+                    fullWidth: true,
+                    indicators: true
+                });
+            });
 
-    //embedded viewer scripts
-    google.books.load();
-    google.books.setOnLoadCallback(initializeViewers);
+            //embedded viewer scripts
+            google.books.load();
+            google.books.setOnLoadCallback(initializeViewers);
 
-    //initialize Google View for each book
-    function initializeViewers() {
+            //initialize Google View for each book
+            function initializeViewers() {
 
-        //loop through each viewer canvas - anything w/ an id starting with "viewerCanvas"
-        $("[id^=viewerCanvas]").each(function () {
-            //Create a new viewer for each of them
-            let isbn = $(this).data("id");
-            console.log(isbn);
+                //loop through each viewer canvas - anything w/ an id starting with "viewerCanvas"
+                $("[id^=viewerCanvas]").each(function () {
+                    //Create a new viewer for each of them
+                    let isbn = $(this).data("id");
+                    console.log(isbn);
 
-            //console.log("this: ", $(this));
-            //console.log($(this).attr("id"));
-            //console.log(this.id);
+                    //console.log("this: ", $(this));
+                    //console.log($(this).attr("id"));
+                    //console.log(this.id);
 
-            //!-- let viewerCanvasDomElemId = "viewerCanvas-" + isbn;
-            let googleViewer = new google.books.DefaultViewer(this);
+                    //!-- let viewerCanvasDomElemId = "viewerCanvas-" + isbn;
+                    let googleViewer = new google.books.DefaultViewer(this);
 
-            //Load the viewer for each book using it's ISBN
-            googleViewer.load("ISBN:" + isbn, null);
-        })
-    }
-    //function initialize() {
-    //var viewer = new google.books.defaultViewer(document.getElementById("viewerCanvas"));
-    //viewer.load("ISBN:viewerCanvas", null, alertInitialized);
-    //viewer.load("ISBN:1234", alertNotFound);
-    //}
+                    //Load the viewer for each book using it's ISBN
+                    googleViewer.load("ISBN:" + isbn, null);
+                })
+            }
+            //function initialize() {
+            //var viewer = new google.books.defaultViewer(document.getElementById("viewerCanvas"));
+            //viewer.load("ISBN:viewerCanvas", null, alertInitialized);
+            //viewer.load("ISBN:1234", alertNotFound);
+            //}
 
-    function alertInitialized() {
-        alert("book successfully loaded and initialized!");
-    }
+            function alertInitialized() {
+                alert("book successfully loaded and initialized!");
+            }
 
-    function alertNotFound() {
-        alert("could not embed the book!");
-    }
-
-
-</script>
+            function alertNotFound() {
+                alert("could not embed the book!");
+            }
 
 
+        </script>
 
-<!-- Code for Carousel, getting a simple list to populate first though -->
-{{!-- <div class="carousel carousel-slider center">
+
+
+        <!-- Code for Carousel, getting a simple list to populate first though -->
+        {{!-- <div class="carousel carousel-slider center">
     <div class="carousel-fixed-item center">
         <a class="btn waves-effect white grey-text darken-text-2">button</a>
     </div>
@@ -136,7 +176,7 @@
 
 
 
-{{!-- <h3>Examples:</h3>
+        {{!-- <h3>Examples:</h3>
 
         <ul id="example-list" class="list-group">
           {{#each examples}}
