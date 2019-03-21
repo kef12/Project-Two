@@ -2,6 +2,7 @@ var db = require("../models");
 var tdQueryUrl = require("../controllers/tastedive");
 var gbQueryUrl = require("../controllers/googleBooks")
 var axios = require("axios");
+var path = require("path");
 var gbResponse;
 var responseArray = [];
 var responseCounter = 0;
