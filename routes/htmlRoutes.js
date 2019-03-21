@@ -88,8 +88,8 @@ module.exports = function (app) {
   // })
 
   //Details route
-  app.get("/detailsPage", function (req, res) {
-    res.render("detailsPage");
+  app.get("/book/favorite/", function (req, res) {
+    res.render("favoritesPage");
     //goodreads call - need to move this
     // axios
     //   .get(grQueryUrl, {
