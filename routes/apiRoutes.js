@@ -12,7 +12,7 @@ app.get("/api/results", function(req, res) {
 });
 
 
-  // Create a new example
+  // Create a new book
 app.post("/api/books", function(req, res) {
   db.Author.create(req.body).then(function(dbAuthor) {
     res.json(dbAuthor);
