@@ -1,10 +1,10 @@
 
     <div class="container fav-container">
-        <div class="card">
-            <h3 class="submitFont">Everyone is Reading:</h3>
+        <div class="card brown lighten-5">
+            <h3 class="center-align">Recent Favorites:</h3>
             <ul>
                {{#each books}}
-               <li>{{this.title}}{{this.body}}</li>
+               <li class="center-align">{{this.title}}, by {{this.body}}</li>
                {{/each}}
             </ul>
         </div>
